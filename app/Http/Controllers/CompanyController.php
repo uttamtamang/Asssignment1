@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Media;
+use DB;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,13 +14,22 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = new Company();
-        $companies = $companies-> get();
+
+
+        $companies= DB::table('company')->get();
+       // $companies = new Company();
+         $medias = DB::table('company')
+          ->join('media', 'media.company_id', '=', 'company.company_id')->get();
+        // ->SELECR
+       // dd($companies);//
         // $medias = Media::all()->where('company_id', $company_id)
-        // dd($companies);
-       return view('companies',[
-        'companies' => $companies
-    ]);
+        //dd($companies);
+    //    return view('companies',[
+    //     'companies' => $companies
+    // ]);
+
+    return view('/companies',compact('companies','medias'));
+    //dd($companies, $medias);
     }
 
     public function addCompany()

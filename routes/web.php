@@ -26,5 +26,7 @@ Route::get('/companies',  [App\Http\Controllers\CompanyController::class, 'index
 Route::post('/companies', [App\Http\Controllers\CompanyController::class, 'addCompany'])->name('companies');
 // 
 Route::post('/addmedia', [App\Http\Controllers\MediaController::class, 'addmedia']);
+
+
 // 
 

@@ -36,13 +36,12 @@ class MediaController extends Controller
 
     }
 
-    // public function getMedia(){
-    //     $medias = new Media();
-    //     $medias = $medias-> get();
-        
-    //     return redirect()->to('companies',[
-    //         'medias' => $medias
-    //     ]
-    //         );
-    // }
+     public function getMedia(){
+        // $medias = new Media();
+        $medias= DB::table('media')->get();
+        return redirect()->to('companies',[
+            'medias' => $medias
+        ]
+            );
+    }
 }

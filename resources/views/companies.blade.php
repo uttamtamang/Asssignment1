@@ -42,18 +42,34 @@
 <!-- Company's Media -->
 @if($companies -> count())
 @foreach($companies as $key=>$company)
+
 <div class="card " id="companyCard" style={margin-top:20px}>
   <div class="card-header">
     {{$company->companyName}}
   </div>
   <div class="card-body" >
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addMediaModal">Add Medias</button>
-  </div>
+  <form action="/addmedia" method="post" enctype="multipart/form-data">
+      {{csrf_field()}}
+      <div class="form-group">
+					<input type="file" class="form-control" name="image" >
+				</div>
+        <div class='form-group'>
+        <input type="text" name="company_id" value="{{$company->company_id}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Media</button>
+      </form>
  
-  <div class="text-center">
-    <img src="..." class="rounded" alt="...">
-  </div>
 
+    <button href="/addmedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addMediaModal">Add Medias</button>
+  </div>
+  
+  @foreach($medias as $key=>$media)
+  @if($media->company_id == $company->company_id)
+  <div class="">
+    <img src="{!! asset('uploads/medias/'.$media->image) !!}" style="height:300px;width:300px;" class="rounded" alt="image.jpg"/>
+  </div>
+  @endif
+@endforeach
 </div>
 @endforeach
 @endif
@@ -78,12 +94,10 @@
           <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
         </div> -->
         <div class="form-group">
-							
-							<input type="file" class="form-control" name="image" >
-							
-                            </div>
+					<input type="file" class="form-control" name="image" >
+				</div>
         <div class='form-group'>
-        <input type="hidden" name="company_id" value="1">
+        <input type="text" name="company_id" value="2">
         </div>
       </div>
       </div>
