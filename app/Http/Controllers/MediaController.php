@@ -19,6 +19,11 @@ class MediaController extends Controller
 
     public function addmedia()
     {
+        $this->validate(request(), [
+            'image'=> 'required | max:150',
+        ], ['image.required' => 'image fileis required']);
+
+
         $req = request();
         $form_req = $req->all();
 
@@ -36,12 +41,12 @@ class MediaController extends Controller
 
     }
 
-     public function getMedia(){
-        // $medias = new Media();
-        $medias= DB::table('media')->get();
-        return redirect()->to('companies',[
-            'medias' => $medias
-        ]
-            );
-    }
+    //  public function getMedia(){
+    //     // $medias = new Media();
+    //     $medias= DB::table('media')->get();
+    //     return redirect()->to('companies',[
+    //         'medias' => $medias
+    //     ]
+    //         );
+    // }
 }

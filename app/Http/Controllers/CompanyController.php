@@ -14,10 +14,8 @@ class CompanyController extends Controller
 
     public function index()
     {
-
-
+        // $companies = new Company();
         $companies= DB::table('company')->get();
-       // $companies = new Company();
          $medias = DB::table('company')
           ->join('media', 'media.company_id', '=', 'company.company_id')->get();
         // ->SELECR
@@ -27,11 +25,12 @@ class CompanyController extends Controller
     //    return view('companies',[
     //     'companies' => $companies
     // ]);
-
     return view('/companies',compact('companies','medias'));
     //dd($companies, $medias);
     }
 
+
+// POSTING NEW COMPANY
     public function addCompany()
     {
         $this->validate(request(), [
@@ -48,6 +47,7 @@ class CompanyController extends Controller
 
     }
 
+    // RETRIEVING COMPANIES
     public function getCompany(){
         $companies = new Company();
         $companies = $companies-> get();

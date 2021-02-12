@@ -9,9 +9,25 @@
   margin:0.5rem 0rem;
   padding:1rem;
 }
+.ImageContainer{
+  display:flex;
+}
+
+.mediaImage{
+  display:flex;
+}
+/* .mediaImage div{
+  width: 300px;
+  height: 300px;
+} */
+.mediaImage img{
+  margin:10px;
+  
+}
 </style>
 
 <div class="container">
+<!-- Message Handelling Section -->
 @if(session()->has('success'))
   <div class="alert-success" id="success-message">
     <h3> {!! session()->get('success') !!}</h3>
@@ -28,6 +44,8 @@
             </div>
         @endif
 
+
+<!-- POSTING COMPANY DETAIL -->
 <form action='/companies' method="post">
 {{csrf_field()}}
 <div class="input-group mb-3">
@@ -39,11 +57,11 @@
 <button type="submit" class="btn btn-primary" >Add Companies</button>
 </form>
 
-<!-- Company's Media -->
+<!-- Company's Information and Media Card -->
 @if($companies -> count())
 @foreach($companies as $key=>$company)
 
-<div class="card " id="companyCard" style={margin-top:20px}>
+<div class="card " id="companyCard">
   <div class="card-header">
     {{$company->companyName}}
   </div>
@@ -51,31 +69,31 @@
   <form action="/addmedia" method="post" enctype="multipart/form-data">
       {{csrf_field()}}
       <div class="form-group">
-					<input type="file" class="form-control" name="image" >
+					<input type="file" class="form-control" name="image" id="inputGroupFile01" >
 				</div>
         <div class='form-group'>
-        <input type="text" name="company_id" value="{{$company->company_id}}">
+        <input type="hidden" name="company_id"  value="{{$company->company_id}}">
         </div>
-        <button type="submit" class="btn btn-primary">Save Media</button>
+        <button type="submit" class="btn btn-success" margin="5px 0px">Add Media</button>
       </form>
- 
+    <!-- TRIED TO ADD MEDIA TO MODEL BUT COULDN'T -->
+    <!-- <button href="/addmedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addMediaModal">Add Medias</button> -->
 
-    <button href="/addmedia" type="button" class="btn btn-success" data-toggle="modal" data-target="#addMediaModal">Add Medias</button>
   </div>
-  
+  <div class="mediaImage">
   @foreach($medias as $key=>$media)
   @if($media->company_id == $company->company_id)
-  <div class="">
-    <img src="{!! asset('uploads/medias/'.$media->image) !!}" style="height:300px;width:300px;" class="rounded" alt="image.jpg"/>
-  </div>
+      <img src="{!! asset('uploads/medias/'.$media->image) !!}" style="height:300px; width:300px; "  alt="image.jpg"/>
+
   @endif
 @endforeach
+</div>
 </div>
 @endforeach
 @endif
 
 
-  <!-- Media modal -->
+  <!-- POST MEDIA MODALS-->
 <div class="modal fade" id="addMediaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -108,9 +126,6 @@
       </form>
     </div>
   </div>
-
-
-
 </div>
 
 @endsection
